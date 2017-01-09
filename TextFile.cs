@@ -9,11 +9,12 @@ namespace RegexSearch
         {
             try
             {
-                using (StreamReader sr = new StreamReader(filepath))
-                {
-                    String line = sr.ReadToEnd();
-                    Console.WriteLine(line);
-                }
+                string[] partNumbers = File.ReadAllLines(filepath);
+                //using (StreamReader sr = new StreamReader(filepath))
+                //{
+                //    String line = sr.ReadToEnd();
+                //    Console.WriteLine(line);
+                //}
             }
             catch (Exception exc)
             {

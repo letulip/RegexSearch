@@ -1,18 +1,19 @@
 ﻿using Microsoft.Office.Interop.Excel;
 using System;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace RegexSearch
 {
     class ExcelFile
     {
-        public static void getExcelFile(string filepath)
+        public static int getExcelFile(string filePath, string regexPattern)
         {
             try
             {
                 //Create COM Objects. Create a COM object for everything that is referenced
                 Application xlApp = new Application();
-                Workbook xlWorkbook = xlApp.Workbooks.Open(filepath);
+                Workbook xlWorkbook = xlApp.Workbooks.Open(filePath);
                 _Worksheet xlWorksheet = xlWorkbook.Sheets[1];
                 Range xlRange = xlWorksheet.UsedRange;
 
@@ -31,14 +32,30 @@ namespace RegexSearch
 
                         //write the value to the console
                         if (xlRange.Cells[i, j] != null && xlRange.Cells[i, j].Value2 != null)
+                        {
                             Console.Write(xlRange.Cells[i, j].Value2.ToString() + "\t");
+                            if (Regex.IsMatch(xlRange.Cells[i, j].Value2.ToString(), regexPattern))
+                            {
+                                Console.ReadKey();
+
+                                //release com objects to fully kill excel process from running in the background
+                                Marshal.ReleaseComObject(xlRange);
+                                Marshal.ReleaseComObject(xlWorksheet);
+
+                                //close and release
+                                xlWorkbook.Close();
+                                Marshal.ReleaseComObject(xlWorkbook);
+
+                                //quit and release
+                                xlApp.Quit();
+                                Marshal.ReleaseComObject(xlApp);
+
+                                return 1;
+                            }                            
+                        }                            
                     }
                 }
-
-                //cleanup
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-
+                
                 //release com objects to fully kill excel process from running in the background
                 Marshal.ReleaseComObject(xlRange);
                 Marshal.ReleaseComObject(xlWorksheet);
@@ -57,6 +74,8 @@ namespace RegexSearch
                 Console.WriteLine(exc.Message);
             }
 
+            Console.ReadKey();
+            return 0;
         }
     }
 }
