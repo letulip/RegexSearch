@@ -14,14 +14,18 @@ namespace RegexSearch
 
         static void Main(string[] args)
         {
-            //Console.WriteLine("Введите путь к файлу, пожалуйста: ");
-            //string filePath = Console.ReadLine();
+            Console.WriteLine("Введите путь к файлу, пожалуйста: ");
+            string filePath = Console.ReadLine();
 
-            //string textPattern = @"\.txt";
-            //string xlsxPattern = @"\.xlsx";
-
-            //ExcelFile.getExcelFile();
-            TextFile.getTextFile();
+            if(Path.GetExtension(filePath) == ".xlsx")
+            {
+                ExcelFile.getExcelFile(filePath);
+            }
+            if(Path.GetExtension(filePath) == ".txt")
+            {
+                TextFile.getTextFile(filePath);
+            }
+            
 
             Console.ReadKey();
         }

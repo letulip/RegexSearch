@@ -9,11 +9,11 @@ namespace RegexSearch
 {
     class TextFile
     {
-        public static void getTextFile()
+        public static void getTextFile(string filepath)
         {
             try
             {
-                using (StreamReader sr = new StreamReader(@"E:\Projects\RegexSearch\RegexSearch\Sample.txt"))
+                using (StreamReader sr = new StreamReader(filepath))
                 {
                     String line = sr.ReadToEnd();
                     Console.WriteLine(line);

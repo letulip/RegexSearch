@@ -12,13 +12,13 @@ namespace RegexSearch
 {
     class ExcelFile
     {
-        public static void getExcelFile()
+        public static void getExcelFile(string filepath)
         {
             try
             {
                 //Create COM Objects. Create a COM object for everything that is referenced
                 Application xlApp = new Application();
-                Workbook xlWorkbook = xlApp.Workbooks.Open(@"E:\Projects\RegexSearch\RegexSearch\Sample.xlsx");
+                Workbook xlWorkbook = xlApp.Workbooks.Open(filepath);
                 _Worksheet xlWorksheet = xlWorkbook.Sheets[1];
                 Range xlRange = xlWorksheet.UsedRange;
 
