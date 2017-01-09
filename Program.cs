@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -10,24 +6,28 @@ namespace RegexSearch
 {
     class Program
     {
-
-
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
-            Console.WriteLine("Введите путь к файлу, пожалуйста: ");
-            string filePath = Console.ReadLine();
+            //Console.WriteLine("Введите путь к файлу, пожалуйста: ");
+            //string filePath = Console.ReadLine();
 
-            if(Path.GetExtension(filePath) == ".xlsx")
+            if (args == null || args.Length == 0)
             {
-                ExcelFile.getExcelFile(filePath);
+                Console.WriteLine("Please specify arguments!");
+                return 0;
             }
-            if(Path.GetExtension(filePath) == ".txt")
+            else
             {
-                TextFile.getTextFile(filePath);
+                if (Path.GetExtension(args[0]) == ".xlsx")
+                {
+                    ExcelFile.getExcelFile(args[0]);
+                }
+                if (Path.GetExtension(args[0]) == ".txt")
+                {
+                    TextFile.getTextFile(args[0]);
+                }
+                return 1;
             }
-            
-
-            Console.ReadKey();
         }
     }
 }
