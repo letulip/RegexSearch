@@ -14,32 +14,16 @@ namespace RegexSearch
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Введите путь к файлу, пожалуйста: ");
-            string filePath = Console.ReadLine();
+            //Console.WriteLine("Введите путь к файлу, пожалуйста: ");
+            //string filePath = Console.ReadLine();
 
-            string textPattern = @"\.txt";
-            string xlsxPattern = @"\.xlsx";
-            
-            
-            
+            //string textPattern = @"\.txt";
+            //string xlsxPattern = @"\.xlsx";
 
-            try
-            {   
-                using (StreamReader sr = new StreamReader(filePath))
-                {                    
-                    String line = sr.ReadToEnd();
-                    Console.WriteLine(line);
+            //ExcelFile.getExcelFile();
+            TextFile.getTextFile();
 
-                    Console.ReadKey();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("The file could not be read: ");
-                Console.WriteLine(e.Message);
-
-                Console.ReadKey();
-            }
+            Console.ReadKey();
         }
     }
 }
