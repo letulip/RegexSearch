@@ -19,6 +19,7 @@ namespace RegexSearch
                 ExcelWorksheet workSheet = package.Workbook.Worksheets[1];
 
                 string[] output = new string[workSheet.Dimension.End.Column * workSheet.Dimension.End.Row];
+                int k = 0;
 
                 //запись данных из файла в массив строк output
                 for (int i = workSheet.Dimension.Start.Column;
@@ -29,7 +30,8 @@ namespace RegexSearch
                     j <= workSheet.Dimension.End.Row;
                     j++)
                     {
-                        output[i * j] = workSheet.Cells[i, j].Value.ToString();
+                        output[k] = workSheet.Cells[j, i].Value.ToString();
+                        k++;
                     }
                 }
 

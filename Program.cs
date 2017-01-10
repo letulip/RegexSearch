@@ -8,6 +8,7 @@ namespace RegexSearch
     {
         static string filePath;
         static string regexPattern;
+        static string[] input;
 
         static int Main(string[] args)
         {
@@ -31,21 +32,18 @@ namespace RegexSearch
             if (Path.GetExtension(filePath) == ".xlsx")
             {
                 LogFile.Write("Входный файл - xlsx");
-                string[] input = ExcelFile.getExcelFile(filePath);
-
-                return RegexChecking.RegexCheck(input, regexPattern);
+                input = ExcelFile.getExcelFile(filePath);
             }
 
             //проверка файла txt
             if (Path.GetExtension(filePath) == ".txt")
             {
                 LogFile.Write("Входной файл - txt");
-                string[] input = TextFile.getTextFile(filePath);
-
-                return RegexChecking.RegexCheck(input, regexPattern);
+                input = TextFile.getTextFile(filePath);
             }
-                
-            return 0;
+
+            return RegexChecking.RegexCheck(input, regexPattern);
+            
         }
     }
 }
