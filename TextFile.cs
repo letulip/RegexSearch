@@ -5,11 +5,13 @@ namespace RegexSearch
 {
     class TextFile
     {
-        public static void getTextFile(string filepath)
+        public static string[] getTextFile(string filepath)
         {
             try
             {
-                string[] partNumbers = File.ReadAllLines(filepath);
+                string[] output = File.ReadAllLines(filepath);
+
+                return output;
                 //using (StreamReader sr = new StreamReader(filepath))
                 //{
                 //    String line = sr.ReadToEnd();
@@ -18,8 +20,10 @@ namespace RegexSearch
             }
             catch (Exception exc)
             {
-                Console.WriteLine("The file could not be read: ");
-                Console.WriteLine(exc.Message);
+                string[] output = new string[2];
+                output[0] = "The file could not be read: ";
+                output[1] = exc.Message;
+                return output;
             }
         }
     }

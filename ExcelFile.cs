@@ -7,7 +7,7 @@ namespace RegexSearch
 {
     class ExcelFile
     {
-        public static int getExcelFile(string filePath, string regexPattern)
+        public static string[] getExcelFile(string filePath)
         {
             try
             {
@@ -28,34 +28,20 @@ namespace RegexSearch
                     {
                         //new line
                         if (j == 1)
-                            Console.Write("\r\n");
+                        {
+                            string[] output = new string[1];
+                            output[1] = "\r\n";
+                            return output;
+                        }
 
                         //write the value to the console
                         if (xlRange.Cells[i, j] != null && xlRange.Cells[i, j].Value2 != null)
                         {
-                            Console.Write(xlRange.Cells[i, j].Value2.ToString() + "\t");
-                            if (Regex.IsMatch(xlRange.Cells[i, j].Value2.ToString(), regexPattern))
-                            {
-                                Console.ReadKey();
-
-                                //release com objects to fully kill excel process from running in the background
-                                Marshal.ReleaseComObject(xlRange);
-                                Marshal.ReleaseComObject(xlWorksheet);
-
-                                //close and release
-                                xlWorkbook.Close();
-                                Marshal.ReleaseComObject(xlWorkbook);
-
-                                //quit and release
-                                xlApp.Quit();
-                                Marshal.ReleaseComObject(xlApp);
-
-                                return 1;
-                            }                            
-                        }                            
+                            return xlRange.Cells[i, j].Value2.ToString() + "\t";
+                        }
                     }
                 }
-                
+
                 //release com objects to fully kill excel process from running in the background
                 Marshal.ReleaseComObject(xlRange);
                 Marshal.ReleaseComObject(xlWorksheet);
@@ -68,14 +54,13 @@ namespace RegexSearch
                 xlApp.Quit();
                 Marshal.ReleaseComObject(xlApp);
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
-                Console.WriteLine("The file could not be read: ");
-                Console.WriteLine(exc.Message);
+                string[] output = new string[2];
+                output[0] = "The file could not be read: ";
+                output[1] = exc.Message;
+                return output;
             }
-
-            Console.ReadKey();
-            return 0;
         }
     }
 }
