@@ -24,7 +24,7 @@ namespace RegexSearch
                 return 0;
             }
 
-            LogFile.Write("Входных данные получены");
+            LogFile.Write("Входныe данные получены");
             filePath = args[0];
             regexPattern = args[1];
 
@@ -32,18 +32,17 @@ namespace RegexSearch
             if (Path.GetExtension(filePath) == ".xlsx")
             {
                 LogFile.Write("Входный файл - xlsx");
-                input = ExcelFile.getExcelFile(filePath);
+                return ExcelFile.getExcelFile(filePath, regexPattern);
             }
 
             //проверка файла txt
             if (Path.GetExtension(filePath) == ".txt")
             {
                 LogFile.Write("Входной файл - txt");
-                input = TextFile.getTextFile(filePath);
+                return TextFile.getTextFile(filePath, regexPattern);
             }
 
-            return RegexChecking.RegexCheck(input, regexPattern);
-            
+            return 0;
         }
     }
 }

@@ -5,20 +5,18 @@ namespace RegexSearch
 {
     class TextFile
     {
-        public static string[] getTextFile(string filepath)
+        public static int getTextFile(string filepath, string regexPattern)
         {
             try
             {
-                string[] output = File.ReadAllLines(filepath);
-                return output;
+                return RegexChecking.RegexCheck(File.ReadAllLines(filepath), regexPattern);
             }
             catch (Exception exc)
             {
-                string[] output = new string[2];
-                output[0] = "The file could not be read: ";
-                output[1] = exc.Message;
+                Console.WriteLine("The file could not be read: ");
+                Console.WriteLine(exc.Message);
                 LogFile.Write(exc.Message);
-                return output;
+                return 0;
             }
         }
     }
