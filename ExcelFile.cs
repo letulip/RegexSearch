@@ -59,6 +59,7 @@ namespace RegexSearch
                 string[] output = new string[2];
                 output[0] = "The file could not be read: ";
                 output[1] = exc.Message;
+                LogFile.Write(exc.Message);
                 return output;
             }
         }
