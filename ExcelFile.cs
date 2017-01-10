@@ -1,5 +1,7 @@
 ﻿using Microsoft.Office.Interop.Excel;
+using OfficeOpenXml;
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
@@ -7,75 +9,45 @@ namespace RegexSearch
 {
     class ExcelFile
     {
-        public static int getExcelFile(string filePath, string regexPattern)
+        public static string[] getExcelFile(string filePath)
         {
             try
             {
-                //Create COM Objects. Create a COM object for everything that is referenced
-                Application xlApp = new Application();
-                Workbook xlWorkbook = xlApp.Workbooks.Open(filePath);
-                _Worksheet xlWorksheet = xlWorkbook.Sheets[1];
-                Range xlRange = xlWorksheet.UsedRange;
+                //открыть файл
+                var package = new ExcelPackage(new FileInfo(filePath));
 
-                int rowCount = xlRange.Rows.Count;
-                int colCount = xlRange.Columns.Count;
+                ExcelWorksheet workSheet = package.Workbook.Worksheets[1];
 
-                //iterate over the rows and columns and print to the console as it appears in the file
-                //excel is not zero based!!
-                for (int i = 1; i <= rowCount; i++)
+                string[] output = new string[workSheet.Dimension.End.Column * workSheet.Dimension.End.Row];
+                int k = 0;
+
+                //запись данных из файла в массив строк output
+                for (int i = workSheet.Dimension.Start.Column;
+                i <= workSheet.Dimension.End.Column;
+                i++)
                 {
-                    for (int j = 1; j <= colCount; j++)
+                    for (int j = workSheet.Dimension.Start.Row;
+                    j <= workSheet.Dimension.End.Row;
+                    j++)
                     {
-                        //new line
-                        if (j == 1)
-                            Console.Write("\r\n");
-
-                        //write the value to the console
-                        if (xlRange.Cells[i, j] != null && xlRange.Cells[i, j].Value2 != null)
-                        {
-                            Console.Write(xlRange.Cells[i, j].Value2.ToString() + "\t");
-                            if (Regex.IsMatch(xlRange.Cells[i, j].Value2.ToString(), regexPattern))
-                            {
-                                Console.ReadKey();
-
-                                //release com objects to fully kill excel process from running in the background
-                                Marshal.ReleaseComObject(xlRange);
-                                Marshal.ReleaseComObject(xlWorksheet);
-
-                                //close and release
-                                xlWorkbook.Close();
-                                Marshal.ReleaseComObject(xlWorkbook);
-
-                                //quit and release
-                                xlApp.Quit();
-                                Marshal.ReleaseComObject(xlApp);
-
-                                return 1;
-                            }                            
-                        }                            
+                        output[k] = workSheet.Cells[j, i].Value.ToString();
+                        k++;
                     }
                 }
+
+                //закрыть файл
+                package.Dispose();
                 
-                //release com objects to fully kill excel process from running in the background
-                Marshal.ReleaseComObject(xlRange);
-                Marshal.ReleaseComObject(xlWorksheet);
-
-                //close and release
-                xlWorkbook.Close();
-                Marshal.ReleaseComObject(xlWorkbook);
-
-                //quit and release
-                xlApp.Quit();
-                Marshal.ReleaseComObject(xlApp);
+                return output;
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
-                Console.WriteLine("The file could not be read: ");
-                Console.WriteLine(exc.Message);
+                string[] output = new string[2];
+                output[0] = "The file could not be read: ";
+                output[1] = exc.Message;
+                LogFile.Write(exc.Message);
+                return output;
             }
-
-            Console.ReadKey();
-            return 0;
         }
     }
 }

@@ -8,49 +8,42 @@ namespace RegexSearch
     {
         static string filePath;
         static string regexPattern;
+        static string[] input;
 
         static int Main(string[] args)
         {
             //Console.WriteLine("Введите путь к файлу, пожалуйста: ");
             //string filePath = Console.ReadLine();
 
+            LogFile.Write("Программа запущена");
+
+            //проверка наличия входных данных
             if (args == null || args.Length < 2)
-            {                
+            {
+                LogFile.Write("Недостаточно входных данных");
                 return 0;
             }
 
+            LogFile.Write("Входных данные получены");
             filePath = args[0];
             regexPattern = args[1];
 
+            //проверка файла xlsx
             if (Path.GetExtension(filePath) == ".xlsx")
             {
-                return ExcelFile.getExcelFile(filePath, regexPattern);
-
-                //Console.ReadKey();
-                //return 1;
+                LogFile.Write("Входный файл - xlsx");
+                input = ExcelFile.getExcelFile(filePath);
             }
 
+            //проверка файла txt
             if (Path.GetExtension(filePath) == ".txt")
             {
-                //TextFile.getTextFile(filePath);
-
-                string[] partNumbers = File.ReadAllLines(filePath);
-
-                //string pattern = @"^[a-zA-Z0-9]\d{2}[a-zA-Z0-9](-\d{3}){2}[A-Za-z0-9]";
-                
-                foreach (string partNumber in partNumbers)
-                {
-                    Console.WriteLine("{0} {1} a valid part number.", partNumber, Regex.IsMatch(partNumber, regexPattern) ? "is" : "is not");
-
-                    if (Regex.IsMatch(partNumber, regexPattern))
-                    {
-                        Console.ReadKey();
-                        return 1;
-                    }                        
-                }
+                LogFile.Write("Входной файл - txt");
+                input = TextFile.getTextFile(filePath);
             }
-                
-            return 0;
+
+            return RegexChecking.RegexCheck(input, regexPattern);
+            
         }
     }
 }
