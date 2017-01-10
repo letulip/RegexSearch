@@ -27,17 +27,17 @@ namespace RegexSearch
                     for (int j = 1; j <= colCount; j++)
                     {
                         //new line
-                        if (j == 1)
-                        {
-                            string[] output = new string[1];
-                            output[1] = "\r\n";
-                            return output;
-                        }
+                        //if (j == 1)
+                        //{
+                        //    string[] output = new string[1];
+                        //    output[1] = "\r\n";
+                        //    return output;
+                        //}
 
                         //write the value to the console
                         if (xlRange.Cells[i, j] != null && xlRange.Cells[i, j].Value2 != null)
                         {
-                            return xlRange.Cells[i, j].Value2.ToString() + "\t";
+                            return xlRange.Cells[i, j].Value2.ToString()/* + "\t"*/;
                         }
                     }
                 }
@@ -53,6 +53,10 @@ namespace RegexSearch
                 //quit and release
                 xlApp.Quit();
                 Marshal.ReleaseComObject(xlApp);
+
+                string[] output1 = new string[1];
+                output1[1] = "\r\n";
+                return output1;
             }
             catch (Exception exc)
             {

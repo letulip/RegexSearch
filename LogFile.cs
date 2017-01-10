@@ -13,7 +13,7 @@ namespace RegexSearch
             DateTime currtime = DateTime.Now;
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"log.txt", true))
             {
-                string logString = string.Format("{0:yyMMdd hh:mm:ss} : {1}", currtime, msg);
+                string logString = string.Format("{0:yy/MM/dd hh:mm:ss} : {1}", currtime, msg);
                 file.WriteLine(logString);
                 file.Close();
             }

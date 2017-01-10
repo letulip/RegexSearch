@@ -7,7 +7,7 @@ namespace RegexSearch
     class Program
     {
         static string filePath;
-        public static string regexPattern;
+        static string regexPattern;
 
         static int Main(string[] args)
         {
@@ -33,7 +33,7 @@ namespace RegexSearch
                 LogFile.Write("Входный файл - xlsx");
                 string[] input = ExcelFile.getExcelFile(filePath);
 
-                return RegexChecking.RegexCheck(input);
+                return RegexChecking.RegexCheck(input, regexPattern);
             }
 
             //проверка файла txt
@@ -42,7 +42,7 @@ namespace RegexSearch
                 LogFile.Write("Входной файл - txt");
                 string[] input = TextFile.getTextFile(filePath);
 
-                return RegexChecking.RegexCheck(input);
+                return RegexChecking.RegexCheck(input, regexPattern);
             }
                 
             return 0;

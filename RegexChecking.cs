@@ -9,7 +9,7 @@ namespace RegexSearch
 {
     public static class RegexChecking
     {        
-        public static int RegexCheck(string[] input)
+        public static int RegexCheck(string[] input, string regexPattern)
         {
             if (input == null)
             {
@@ -19,7 +19,7 @@ namespace RegexSearch
 
             foreach (string str in input)
             {
-                if (Regex.IsMatch(str, Program.regexPattern))
+                if (Regex.IsMatch(str, regexPattern))
                 {
                     LogFile.Write("Совпадение с регулярным выражением найдено");
                     return 1;
