@@ -13,6 +13,7 @@ namespace RegexSearch
         {
             if (input == null)
             {
+                LogFile.Write("Получен пустой файл");
                 return 0;
             }
 
@@ -20,9 +21,11 @@ namespace RegexSearch
             {
                 if (Regex.IsMatch(str, Program.regexPattern))
                 {
+                    LogFile.Write("Совпадение с регулярным выражением найдено");
                     return 1;
                 }
             }
+            LogFile.Write("Совпадение с регулярным выражением не найдено");
             return 0;
         }
     }
