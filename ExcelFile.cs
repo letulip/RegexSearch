@@ -1,14 +1,12 @@
-﻿using Microsoft.Office.Interop.Excel;
-using OfficeOpenXml;
+﻿using OfficeOpenXml;
 using System;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 
 namespace RegexSearch
 {
     class ExcelFile
     {
+        //обработка excel файла
         public static string[] getExcelFile(string filePath)
         {
             try
@@ -43,7 +41,7 @@ namespace RegexSearch
             catch (Exception exc)
             {
                 string[] output = new string[2];
-                output[0] = "The file could not be read: ";
+                output[0] = "Файл не может быть прочитан: ";
                 output[1] = exc.Message;
                 LogFile.Write(exc.Message);
                 return output;

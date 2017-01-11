@@ -5,17 +5,19 @@ namespace RegexSearch
 {
     class TextFile
     {
-        public static string[] getTextFile(string filepath)
+        //обработка текстового файла
+        public static string[] getTextFile(string filePath)
         {
             try
             {
-                string[] output = File.ReadAllLines(filepath);
+                //запись данных из файла в массив строк output
+                string[] output = File.ReadAllLines(filePath);
                 return output;
             }
             catch (Exception exc)
             {
                 string[] output = new string[2];
-                output[0] = "The file could not be read: ";
+                output[0] = "Файл не может быть прочитан: ";
                 output[1] = exc.Message;
                 LogFile.Write(exc.Message);
                 return output;

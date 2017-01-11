@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 
 namespace RegexSearch
 {
     public static class RegexChecking
-    {        
+    {
+        //проверка файла на совпадение с регулярным выражением 
         public static int RegexCheck(string[] input, string regexPattern)
         {
             if (input == null)
@@ -25,7 +21,7 @@ namespace RegexSearch
                     return 1;
                 }
             }
-            LogFile.Write("Совпадение с регулярным выражением не найдено");
+            LogFile.Write("Совпадений с регулярным выражением не найдено");
             return 0;
         }
     }

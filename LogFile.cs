@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RegexSearch
 {
     class LogFile
     {
+        //запись сообщений в лог-файл
         public static void Write(string msg)
         {
             DateTime currtime = DateTime.Now;
